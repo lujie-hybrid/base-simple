@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p>个人中心信息页面</p>
+    菜单管理
   </div>
 </template>
 

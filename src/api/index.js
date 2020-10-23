@@ -1,6 +1,6 @@
 // api module的自动注入
 
-import myserver from "@/utils/server";
+import myserver from "./server";
 
 const requireModuleApi = require.context("./module", false, /\.js$/);
 

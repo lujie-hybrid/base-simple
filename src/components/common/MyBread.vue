@@ -1,46 +1,75 @@
-<!--
- * @author: lujie
- * @Date: 2020-07-20 10:09:34
- * @LastEditTime: 2020-07-20 10:23:56
- * @FilePath: \official_website\src\components\common\MyBread.vue
- * @descripttion: [desc]
- * @editor: [lj]
--->
 <template>
-  <ul class="fx bread">
-    <li class="f12" v-for="(item, i) in bread" :key="i">
-      <i class="el-icon-s-home" v-if="i === 0"></i>
-      <i class="el-icon-caret-right" v-if="i !== 0"></i>
-      <span :class="['ml10', { 'bread-active': i === bread.length - 1 }]">{{
-        item
-      }}</span>
-    </li>
-  </ul>
+  <el-breadcrumb class="app-breadcrumb" separator="/">
+    <el-breadcrumb-item v-for="item in levelList" :key="item.path">
+      <a v-if="!item.meta.parent" @click.prevent="handleLink(item)">{{
+        item.meta.title
+      }}</a>
+      <span v-if="item.meta.parent">{{ item.meta.title }}</span>
+    </el-breadcrumb-item>
+  </el-breadcrumb>
 </template>
 
 <script>
+// import pathToRegexp from "path-to-regexp";
+
 export default {
-  props: {
-    bread: Array
+  data() {
+    return {
+      levelList: null
+    };
+  },
+  watch: {
+    $route() {
+      this.getBreadcrumb();
+    }
+  },
+  created() {
+    this.getBreadcrumb();
+  },
+  methods: {
+    getBreadcrumb() {
+      // only show routes with meta.title
+      console.log(this.$route, "this.$route");
+      let matched = this.$route.matched.filter(
+        item => item.meta && item.meta.title
+      );
+      const first = matched[0];
+
+      if (!this.isDashboard(first)) {
+        matched = [{ path: "/", meta: { title: "首页" } }].concat(matched);
+      }
+
+      this.levelList = matched.filter(
+        item => item.meta && item.meta.title && item.meta.breadcrumb !== false
+      );
+      console.log(this.levelList);
+    },
+    isDashboard(route) {
+      const name = route && route.name;
+      if (!name) {
+        return false;
+      }
+      return name.trim().toLocaleLowerCase() === "home".toLocaleLowerCase();
+    },
+    // pathCompile(path) {
+    //   // To solve this problem https://github.com/PanJiaChen/vue-element-admin/issues/561
+    //   const { params } = this.$route;
+    //   var toPath = pathToRegexp.compile(path);
+    //   return toPath(params);
+    // },
+    handleLink(item) {
+      const { path } = item;
+      this.$router.push(path);
+    }
   }
 };
 </script>
 
 <style lang="scss" scoped>
-.bread {
-  color: $txt-4;
-  i {
-    color: $txt-6;
-  }
-  > li {
-    margin-left: 10px;
-  }
-  > li:first-child {
-    margin-left: 0;
-  }
-  &-active {
-    color: $txt-2;
-    font-weight: bold;
-  }
+.app-breadcrumb.el-breadcrumb {
+  display: inline-block;
+  font-size: 14px;
+  line-height: 50px;
+  margin-left: 8px;
 }
 </style>

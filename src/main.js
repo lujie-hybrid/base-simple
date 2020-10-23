@@ -8,16 +8,18 @@ import "./utils/elementui";
 import GlobalComponent from "./components";
 Vue.use(GlobalComponent);
 
-// api接口ajax配置
-import server from "@/api";
-Vue.use(server);
-
 //路由
 import router from "./router";
 //状态机制
 import store from "./store";
+// 权限
+import "./permission";
 
-import App from "./App.vue";
+// import App from "./App.vue";
+import App from "./App";
+
+import server from "@/api";
+Vue.use(server);
 
 Vue.prototype.$env = process.env; //环境变量
 Vue.config.productionTip = false;

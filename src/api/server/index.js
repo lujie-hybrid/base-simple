@@ -31,11 +31,11 @@ class MyServer {
    * @param {当前模块名下的key对应的url值} url
    * @param {页面使用时候请求的配置} config
    */
-  sendInferface(moduleName, key, url, successFn, config = {}) {
+  sendInferface(moduleName, key, url, config = {}) {
     let innerConfig = {
       type: config.type || "get",
       data: config.data || {},
-      success: successFn || (() => {}),
+      success: config.success || (() => {}),
       multi: config.multi || false,
       headers: config.headers || {},
       url: config.url || url,

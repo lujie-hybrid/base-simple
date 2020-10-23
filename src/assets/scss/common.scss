@@ -1,33 +1,50 @@
 @import "./reset.scss";
+@import "./sidebar.scss";
 
-::-webkit-scrollbar {
-    /*滚动条整体样式*/
-    width: 8px;
-    /*高宽分别对应横竖滚动条的尺寸*/
-    height: 8px;
-  }
+// ::-webkit-scrollbar {
+//     /*滚动条整体样式*/
+//     width: 8px;
+//     /*高宽分别对应横竖滚动条的尺寸*/
+//     height: 8px;
+//   }
   
-  ::-webkit-scrollbar-thumb {
-    /*滚动条中的滚动块*/
-    border-radius: 8px;
-    background: #c2c0c0;
-  }
+//   ::-webkit-scrollbar-thumb {
+//     /*滚动条中的滚动块*/
+//     border-radius: 8px;
+//     background: #c2c0c0;
+//   }
   
-  ::-webkit-scrollbar-track {
-    /*滚动条里面的轨道*/
-    border-radius: 8px;
-    background: #ededed;
-  }
+//   ::-webkit-scrollbar-track {
+//     /*滚动条里面的轨道*/
+//     border-radius: 8px;
+//     background: #ededed;
+//   }
   
-  .scrollHide ::-webkit-scrollbar {
-    /*滚动条整体样式*/
-    display: none;
-    width: 0 !important;
-    height: 0;
-  }
-  .scrollMineHide::-webkit-scrollbar {
-    /*滚动条整体样式*/
-    display: none;
-    width: 0 !important;
-    height: 0;
-  }
+//   .scrollHide ::-webkit-scrollbar {
+//     /*滚动条整体样式*/
+//     display: none;
+//     width: 0 !important;
+//     height: 0;
+//   }
+//   .scrollMineHide::-webkit-scrollbar {
+//     /*滚动条整体样式*/
+//     display: none;
+//     width: 0 !important;
+//     height: 0;
+//   }
+
+/* fade-transform */
+.fade-transform-leave-active,
+.fade-transform-enter-active {
+  transition: all .5s;
+}
+
+.fade-transform-enter {
+  opacity: 0;
+  transform: translateX(-30px);
+}
+
+.fade-transform-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
+}

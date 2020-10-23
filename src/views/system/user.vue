@@ -1,7 +1,6 @@
 <template>
   <div>
-    <p>个人中心子系统模板</p>
-    <router-view></router-view>
+    用户管理
   </div>
 </template>
 

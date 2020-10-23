@@ -1,3 +1,17 @@
-$txt-2: #ff0000;
-$txt-4: #403f4c;
-$txt-6: #666666;
+$sideBarWidth: 210px;
+
+$menuText: #bfcbd9;
+$menuBg: #304156;
+$menuActiveText: #409eff;
+
+$menuHover:#263445;
+$subMenuActiveText:#f4f4f5; 
+$subMenuBg:#1f2d3d;
+$subMenuHover:#001528;
+
+:export {
+  menuText: $menuText;
+  menuActiveText: $menuActiveText;
+  menuBg: $menuBg;
+  sideBarWidth: $sideBarWidth;
+}
