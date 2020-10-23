@@ -48,3 +48,10 @@
   opacity: 0;
   transform: translateX(30px);
 }
+
+
+.nowrap{
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}

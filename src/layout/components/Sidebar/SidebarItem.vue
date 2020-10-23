@@ -3,8 +3,10 @@
     <template v-if="item.children && item.children.length > 0">
       <el-submenu :index="path">
         <template slot="title">
-          <i :class="item.meta.icon"></i>
-          <span slot="title">{{ item.meta.title }}</span>
+          <div class="nowrap sub-title-hidden" :title="item.meta.title">
+            <i :class="item.meta.icon"></i>
+            <span slot="title">{{ item.meta.title }}</span>
+          </div>
         </template>
         <sidebar-item
           v-for="child in item.children"
@@ -16,7 +18,7 @@
     </template>
     <template v-else>
       <router-link :title="path" :style="{ display: 'block' }" :to="path">
-        <el-menu-item :index="path">
+        <el-menu-item :index="path" class="nowrap" :title="item.meta.title">
           <i :class="item.meta.icon"></i>
           <span slot="title">{{ item.meta.title }}</span>
         </el-menu-item>
@@ -44,3 +46,9 @@ export default {
   methods: {}
 };
 </script>
+
+<style lang="scss" scoped>
+.sub-title-hidden {
+  padding-right: 16px;
+}
+</style>
