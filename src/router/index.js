@@ -25,22 +25,28 @@ export const constantRoutes = [
       title: "登录",
       icon: "el-icon-house"
     }
-  },
-  ...moduleRouters
+  }
 ];
 
-const originalPush = VueRouter.prototype.push;
-VueRouter.prototype.push = function push(location, onResolve, onReject) {
-  if (onResolve || onReject)
-    return originalPush.call(this, location, onResolve, onReject);
-  return originalPush.call(this, location).catch(err => err);
-};
+// const originalPush = VueRouter.prototype.push;
+// VueRouter.prototype.push = function push(location, onResolve, onReject) {
+//   if (onResolve || onReject)
+//     return originalPush.call(this, location, onResolve, onReject);
+//   return originalPush.call(this, location).catch(err => err);
+// };
 
-const router = new VueRouter({
-  mode: "history",
-  scrollBehavior: () => ({ y: 0 }),
-  base: process.env.BASE_URL,
-  routes: constantRoutes
-});
+const createRouter = () =>
+  new VueRouter({
+    mode: "history",
+    scrollBehavior: () => ({ y: 0 }),
+    base: process.env.BASE_URL,
+    routes: [...constantRoutes, ...moduleRouters]
+  });
+const router = createRouter();
+
+export function resetRouter() {
+  const newRouter = createRouter();
+  router.matcher = newRouter.matcher; // reset router
+}
 
 export default router;

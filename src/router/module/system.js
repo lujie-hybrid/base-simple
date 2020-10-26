@@ -54,37 +54,6 @@ export default {
         title: "岗位管理",
         icon: "el-icon-notebook-1"
       }
-    },
-
-    {
-      path: "station1",
-      name: "system-station1",
-      component: importUrl("system/station"),
-      meta: {
-        title:
-          "岗位管理岗位管理岗位管理岗位管理岗位管理岗位管理岗位管理岗位管理岗位管理岗位管理1",
-        icon: "el-icon-notebook-1"
-      }
-    },
-    {
-      path: "menu1",
-      name: "system-menu1",
-      component: importUrl("system/menu"),
-      meta: {
-        title:
-          "菜单管理菜单管理菜单管理菜单管理菜单管理菜单管理菜单管理菜单管理4326542624642642",
-        icon: "el-icon-menu"
-      }
-    },
-    {
-      path: "department1",
-      name: "system-department1",
-      component: importUrl("system/department"),
-      meta: {
-        title:
-          "部门管理部门管理部门管理部门管理部门管理部门管理部门管理部门管理部门管理部门管理部门管理部门管理部门管理部门管理344555",
-        icon: "el-icon-school"
-      }
     }
   ]
 };

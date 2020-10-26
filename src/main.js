@@ -8,6 +8,9 @@ import "./utils/elementui";
 import GlobalComponent from "./components";
 Vue.use(GlobalComponent);
 
+import server from "@/api";
+Vue.use(server);
+
 //路由
 import router from "./router";
 //状态机制
@@ -17,9 +20,6 @@ import "./permission";
 
 // import App from "./App.vue";
 import App from "./App";
-
-import server from "@/api";
-Vue.use(server);
 
 Vue.prototype.$env = process.env; //环境变量
 Vue.config.productionTip = false;

@@ -1,5 +1,4 @@
 // ajax的封装
-
 import server from "./ajax";
 import qs from "qs";
 
@@ -36,36 +35,52 @@ class MyServer {
       type: config.type || "get",
       data: config.data || {},
       success: config.success || (() => {}),
+      fail: config.fail || (() => {}),
       multi: config.multi || false,
       headers: config.headers || {},
       url: config.url || url,
-      urlId: config.urlId || ""
+      urlId: config.urlId || "",
+      useFormData: config.useFormData || false
     };
     const callback = res => {
-      const dt = res.data;
+      const wrapData = res.data;
       this[moduleName][key].state = "ready";
-      return dt;
+      return wrapData;
+    };
+    const fail = () => {
+      this[moduleName][key].state = "ready";
+      innerConfig.fail();
     };
     innerConfig.urlId &&
       (innerConfig.url = innerConfig.url + innerConfig.urlId);
     let method = {
       get: () => {
-        const qsResult = qs.stringify(innerConfig.data);
-        const qsUrl = qsResult
+        const qsUrl = innerConfig.data
           ? `${innerConfig.url}?${qs.stringify(innerConfig.data)}`
           : innerConfig.url;
         this.server
           .get(qsUrl, { headers: innerConfig.headers })
           .then(callback)
-          .then(innerConfig.success);
+          .then(innerConfig.success)
+          .catch(fail);
       },
       post: () => {
+        let fm = null;
+        if (innerConfig.useFormData) {
+          fm = new FormData();
+          Object.keys(innerConfig.data).forEach(k => {
+            fm.append(k, innerConfig.data[k]);
+          });
+        } else {
+          fm = innerConfig.data;
+        }
         this.server
-          .post(innerConfig.url, innerConfig.data, {
+          .post(innerConfig.url, fm, {
             headers: innerConfig.headers
           })
           .then(callback)
-          .then(innerConfig.success);
+          .then(innerConfig.success)
+          .catch(fail);
       }
     };
     if (this[moduleName][key].state === "ready") {

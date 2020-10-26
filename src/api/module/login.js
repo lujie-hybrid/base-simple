@@ -1,3 +1,4 @@
 export default {
-  toLogin: "/api/login"
+  toLogin: "/greatwall/clinet/login",
+  getMenu: "/greatwall/clinet/menu"
 };

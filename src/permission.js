@@ -2,7 +2,8 @@ import router from "./router";
 // import { Message } from "element-ui";
 import NProgress from "nprogress"; // progress bar
 import "nprogress/nprogress.css"; // progress bar style
-import { validateToken } from "@/utils/auth"; // get token from cookie
+import { getStorage } from "@/utils/common"; // get token from cookie
+import store from "@/store";
 
 NProgress.configure({ showSpinner: false }); // NProgress Configuration
 
@@ -16,25 +17,27 @@ router.beforeEach(async (to, from, next) => {
   document.title = to.meta.title;
 
   // determine whether the user has logged in
-  const hasToken = validateToken("666");
+  const hasToken = getStorage("token");
 
   if (hasToken) {
+    console.log(to, "666 to");
     if (to.path === "/login") {
+      console.log("login router");
       next();
-      // next({ path: "/" });
-      NProgress.done(); // hack: https://github.com/PanJiaChen/vue-element-admin/pull/2939
     } else {
-      next();
+      console.log("setMunu wrap start");
+      store.dispatch("app/setMenu").then(() => {
+        next();
+      });
     }
   } else {
     /* has no token*/
-
     if (whiteList.indexOf(to.path) !== -1) {
       // in the free login whitelist, go directly
       next();
     } else {
       // other pages that do not have permission to access are redirected to the login page.
-      next(`/login?redirect=${to.path}`);
+      next(`/login`);
       NProgress.done();
     }
   }

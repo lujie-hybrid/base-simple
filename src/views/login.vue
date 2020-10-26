@@ -54,7 +54,6 @@
       </el-form-item>
 
       <el-button
-        :loading="loading"
         type="primary"
         style="width:100%;margin-bottom:30px;"
         @click.native.prevent="handleLogin"
@@ -65,6 +64,7 @@
 </template>
 
 <script>
+import { setStorage } from "@/utils/common";
 export default {
   name: "login",
   data() {
@@ -76,8 +76,8 @@ export default {
       }
     };
     const validatePassword = (rule, value, callback) => {
-      if (value.length < 6) {
-        callback(new Error("密码不得少于6位"));
+      if (value.length < 5) {
+        callback(new Error("密码不得少于5位"));
       } else {
         callback();
       }
@@ -85,7 +85,7 @@ export default {
     return {
       loginForm: {
         username: "admin",
-        password: "111111"
+        password: "admin"
       },
       loginRules: {
         username: [
@@ -95,8 +95,7 @@ export default {
           { required: true, trigger: "blur", validator: validatePassword }
         ]
       },
-      passwordType: "password",
-      loading: false
+      passwordType: "password"
     };
   },
   methods: {
@@ -113,16 +112,11 @@ export default {
     handleLogin() {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
-          this.loading = true;
-          this.$store
-            .dispatch("user/login", this.loginForm)
-            .then(() => {
-              this.$router.push({ path: "/" });
-              this.loading = false;
-            })
-            .catch(() => {
-              this.loading = false;
-            });
+          this.$store.dispatch("app/login", this.loginForm).then(res => {
+            setStorage("token", res.accessToken);
+            // this.$store.commit("app/SET_MENU", res.menus);
+            this.$router.push({ path: "/" });
+          });
         } else {
           console.log("error submit!!");
           return false;

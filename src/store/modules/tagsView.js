@@ -4,12 +4,24 @@ const state = {
 
 const mutations = {
   ADD_VISITED_VIEW: (state, view) => {
-    if (state.visitedViews.some(v => v.path === view.path)) return;
-    state.visitedViews.push(
-      Object.assign({}, view, {
-        title: view.meta.title || "no-name"
-      })
-    );
+    let i = state.visitedViews.findIndex(v => v.path === view.path);
+    if (i !== -1) {
+      const list = state.visitedViews.map((item, f) => {
+        const newView = {
+          ...item,
+          ...view,
+          ...{ title: view.meta.title || "no-name666" }
+        };
+        return i === f ? newView : item;
+      });
+      state.visitedViews = list;
+    } else {
+      state.visitedViews.push(
+        Object.assign({}, view, {
+          title: view.meta.title || "no-name"
+        })
+      );
+    }
   },
 
   DEL_VISITED_VIEW: (state, view) => {

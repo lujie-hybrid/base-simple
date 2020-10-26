@@ -19,6 +19,8 @@ const install = Vue => {
   Vue.prototype.$server = myserver;
 };
 
+export const server = myserver;
+
 export default {
   install
 };

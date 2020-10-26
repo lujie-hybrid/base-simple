@@ -1,11 +1,13 @@
 import axios from "axios";
-// import Vue from "vue";
+import Vue from "vue";
+import router from "@/router";
 const env =
   process.env.NODE_ENV === "development" ? "" : "http://10.168.1.186:22011";
 const instance = axios.create({
   baseURL: env,
   timeout: 60000
 });
+console.log(router, "router");
 
 // 添加请求拦截器
 instance.interceptors.request.use(
@@ -27,10 +29,14 @@ instance.interceptors.response.use(
     if (res.status === 1) {
       return res;
     } else {
-      // Vue.prototype.$message({
-      //   message: res.msg,
-      //   type: "error"
-      // });
+      Vue.prototype.$message({
+        message: res.msg,
+        type: "error"
+      });
+      console.log(res.code);
+      if (res.code == 1001) {
+        router.replace({ path: "/login" });
+      }
       return Promise.reject();
     }
   },

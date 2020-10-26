@@ -55,11 +55,12 @@ export default {
       return this.$store.state.tagsView.visitedViews;
     },
     routes() {
-      return this.$store.state.permission.routes;
+      return this.$store.state.app.menu;
     }
   },
   watch: {
-    $route() {
+    $route(to) {
+      console.log(to, "khfajhasdjk");
       this.addTags();
       this.moveToCurrentTag();
     },
@@ -71,31 +72,35 @@ export default {
       }
     }
   },
+  mounted() {
+    this.addTags();
+    this.moveToCurrentTag();
+  },
   methods: {
     isActive(route) {
       return route.path === this.$route.path;
     },
     addTags() {
-      const { name } = this.$route;
-      if (name) {
+      if (this.$route.meta && this.$route.meta.title) {
         this.$store.dispatch("tagsView/addVisitedView", this.$route);
       }
-      return false;
     },
     moveToCurrentTag() {
-      this.$nextTick(() => {
-        const tags = this.$refs.tag;
-        for (const tag of tags) {
-          if (tag.to.path === this.$route.path) {
-            this.$refs.scrollPane.moveToTarget(tag);
-            // when query is different then update
-            if (tag.to.fullPath !== this.$route.fullPath) {
-              this.$store.dispatch("tagsView/updateVisitedView", this.$route);
+      if (this.$route.meta && this.$route.meta.title) {
+        this.$nextTick(() => {
+          const tags = this.$refs.tag;
+          for (const tag of tags) {
+            if (tag.to.path === this.$route.path) {
+              this.$refs.scrollPane.moveToTarget(tag);
+              // when query is different then update
+              if (tag.to.fullPath !== this.$route.fullPath) {
+                this.$store.dispatch("tagsView/updateVisitedView", this.$route);
+              }
+              break;
             }
-            break;
           }
-        }
-      });
+        });
+      }
     },
     closeSelectedTag(view) {
       this.$store
