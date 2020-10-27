@@ -15,9 +15,6 @@ export default {
   },
   components: {
     Layout
-  },
-  created() {
-    console.log(this.$route, "app routes");
   }
 };
 </script>

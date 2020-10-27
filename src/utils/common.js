@@ -15,7 +15,6 @@ export const transRouters = list => {
   list.forEach(ele => {
     ele.component = importUrl(ele.component);
     if (ele.children && ele.children.length > 0) {
-      console.log("in");
       transRouters(ele.children);
     }
   });

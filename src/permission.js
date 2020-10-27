@@ -20,12 +20,9 @@ router.beforeEach(async (to, from, next) => {
   const hasToken = getStorage("token");
 
   if (hasToken) {
-    console.log(to, "666 to");
     if (to.path === "/login") {
-      console.log("login router");
       next();
     } else {
-      console.log("setMunu wrap start");
       store.dispatch("app/setMenu").then(() => {
         next();
       });

@@ -41,7 +41,6 @@ export default {
     },
     moveToTarget(currentTag) {
       const $container = this.$refs.scrollContainer.$el;
-      console.log(this.$refs.scrollContainer);
       const $containerWidth = $container.offsetWidth;
       const $scrollWrapper = this.scrollWrapper;
       const tagList = this.$parent.$refs.tag;

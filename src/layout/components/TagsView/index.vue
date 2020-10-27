@@ -59,8 +59,7 @@ export default {
     }
   },
   watch: {
-    $route(to) {
-      console.log(to, "khfajhasdjk");
+    $route() {
       this.addTags();
       this.moveToCurrentTag();
     },
@@ -107,7 +106,6 @@ export default {
         .dispatch("tagsView/delVisitedView", view)
         .then(visitedViews => {
           if (this.isActive(view)) {
-            console.log(visitedViews);
             this.toLastView(visitedViews, view);
           }
         });

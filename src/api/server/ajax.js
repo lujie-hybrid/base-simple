@@ -7,7 +7,6 @@ const instance = axios.create({
   baseURL: env,
   timeout: 60000
 });
-console.log(router, "router");
 
 // 添加请求拦截器
 instance.interceptors.request.use(
@@ -33,7 +32,6 @@ instance.interceptors.response.use(
         message: res.msg,
         type: "error"
       });
-      console.log(res.code);
       if (res.code == 1001) {
         router.replace({ path: "/login" });
       }

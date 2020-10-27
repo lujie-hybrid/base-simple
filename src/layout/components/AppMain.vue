@@ -19,7 +19,7 @@ export default {
 
 <style lang="scss" scoped>
 .app-main {
-  min-height: calc(100vh - 84px);
+  height: calc(100vh - 84px);
   width: 100%;
   position: relative;
   overflow-x: hidden;
